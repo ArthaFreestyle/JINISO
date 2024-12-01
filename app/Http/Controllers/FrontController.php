@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use app\Models\Category;
 use app\Models\Products;
+use App\Services\FrontService;
 
 class FrontController extends Controller
 {
@@ -24,14 +25,12 @@ class FrontController extends Controller
 
     public function category(Category $category)
     {
-        $data = $this->frontService->getCategoryPageData($category);
-        return view('front.category',$data);
+        return view('front.category',$category);
     }
 
     public function details(Products $product)
     {
-        $data = $this->frontService->getProductPageData($product);
-        return view('front.details',$data);
+        return view('front.details',$product);
     }
 
 
