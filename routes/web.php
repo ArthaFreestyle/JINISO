@@ -3,8 +3,11 @@
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
 use App\Http\Controllers\AuthController;
 use App\Models\Category;
+=======
+>>>>>>> 4f33f3a4008a63719487c49cc5c2fb30d04f72db
 
 Route::get('/',[FrontController::class,'index'])->name('front.index');
 
@@ -22,6 +25,7 @@ Route::post('/order/booking/customer-data/save',[OrderController::class,'saveCus
 Route::get('/order/payment',[OrderController::class,'payment'])->name('front.payment');
 Route::post('/order/payment/confirm',[OrderController::class,'paymentConfirm'])->name('front.payment_confirm');
 
+<<<<<<< HEAD
 Route::get('/order/finished/{order:order_id}',[OrderController::class,'orderFinished'])->name('front.order_finished');
 
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -30,3 +34,6 @@ Route::get('register', [AuthController::class, 'showRegisterForm'])->name('regis
 Route::post('register', [AuthController::class, 'register']);
 Route::get('profile', [AuthController::class, 'showProfile'])->name('profile')->middleware('auth');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+=======
+Route::get('/order/finished/{order:order_id}',[OrderController::class,'orderFinished'])->name('front.order_finished');
+>>>>>>> 4f33f3a4008a63719487c49cc5c2fb30d04f72db
