@@ -11,10 +11,26 @@
         <div class="relative flex flex-col w-full max-w-[640px] min-h-screen gap-5 mx-auto bg-[#F5F5F0]">
             <div id="top-bar" class="flex justify-between items-center px-4 mt-[60px]">
                 <img src="assets/images/logos/logo.svg" class="flex shrink-0" alt="logo">
+<<<<<<< HEAD
+                <div class="flex items-center gap-4 sm:gap-2">
+                    <!-- Tombol Login di sebelah kiri notifikasi -->
+                    <a href="#">
+                        <img src="assets/images/icons/notification.svg" class="w-10 h-10" alt="notification">
+                    </a>
+                    <a href="#">
+                        <img src="assets/images/icons/cart.svg" class="w-10 h-10" alt="cart">
+                    </a>
+                    <a href="{{ route('login') }}" class="bg-[#C5F277] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#A2D65B] transition-colors">
+                        Login                    
+                    </a>
+                </div>
+            </div>                                    
+=======
                 <a href="#">
                     <img src="assets/images/icons/notification.svg" class="w-10 h-10" alt="icon">
                 </a>
             </div>
+>>>>>>> 4f33f3a4008a63719487c49cc5c2fb30d04f72db
             <form class="flex justify-between items-center mx-4">
                 <div class="relative flex items-center w-full rounded-l-full px-[14px] gap-[10px] bg-white transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FFC700]">
                     <img src="assets/images/icons/search-normal.svg" class="w-6 h-6" alt="icon">
