@@ -10,33 +10,34 @@
     <body>
         <div class="relative flex flex-col w-full max-w-[640px] min-h-screen gap-5 mx-auto bg-[#F5F5F0]">
             <div id="top-bar" class="flex justify-between items-center px-4 mt-[60px]">
-                <img src="assets/images/logos/logo.svg" class="flex shrink-0" alt="logo">
-<<<<<<< HEAD
+                <img src="{{ asset('assets/images/logos/jiniso.webp') }}" class="flex shrink-0 h-10 w-10 rounded-full" alt="logo">
                 <div class="flex items-center gap-4 sm:gap-2">
                     <!-- Tombol Login di sebelah kiri notifikasi -->
                     <a href="#">
-                        <img src="assets/images/icons/notification.svg" class="w-10 h-10" alt="notification">
+                        <img src="{{ asset('assets/images/icons/notification.svg') }}" class="w-10 h-10" alt="notification">
                     </a>
                     <a href="#">
                         <img src="assets/images/icons/cart.svg" class="w-10 h-10" alt="cart">
                     </a>
-                    <a href="{{ route('login') }}" class="bg-[#C5F277] px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#A2D65B] transition-colors">
-                        Login                    
-                    </a>
+                    @if (Auth()->user())
+                        <a href="{{ route('logout') }}" style="background-color: #a78bfa;" class="bg-purple-400 px-4 py-5 rounded-full text-sm font-semibold hover:bg-purple-600">
+                            Logout
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" style="background-color: #a78bfa;" class="bg-purple-400 px-4 py-5 rounded-full text-sm font-semibold hover:bg-purple-600">
+                            Login                    
+                        </a>    
+                    @endif
+
+                    
                 </div>
             </div>                                    
-=======
-                <a href="#">
-                    <img src="assets/images/icons/notification.svg" class="w-10 h-10" alt="icon">
-                </a>
-            </div>
->>>>>>> 4f33f3a4008a63719487c49cc5c2fb30d04f72db
             <form class="flex justify-between items-center mx-4">
                 <div class="relative flex items-center w-full rounded-l-full px-[14px] gap-[10px] bg-white transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FFC700]">
                     <img src="assets/images/icons/search-normal.svg" class="w-6 h-6" alt="icon">
                     <input type="text" class="w-full py-[14px] appearance-none bg-white outline-none font-semibold placeholder:font-normal placeholder:text-[#878785]" placeholder="Search product...">
                 </div>
-                <button type="submit" class="h-full rounded-r-full py-[14px] px-5 bg-[#C5F277]">
+                <button type="submit" style="background-color: #a78bfa;" class="h-full rounded-r-full py-[14px] px-5">
                     <span class="font-semibold">Explore</span>
                 </button>
             </form>
@@ -147,7 +148,7 @@
                 <nav class="fixed bottom-5 w-full max-w-[640px] px-4 z-30">
                     <div class="grid grid-flow-col auto-cols-auto items-center justify-between rounded-full bg-[#2A2A2A] p-2 px-[30px]">
                         <a href="index.html" class="active flex shrink-0 -mx-[22px]">
-                            <div class="flex items-center rounded-full gap-[10px] p-[12px_16px] bg-[#C5F277]">
+                            <div style="background-color: #a78bfa;" class="flex items-center rounded-full gap-[10px] p-[12px_16px]">
                                 <img src="assets/images/icons/3dcube.svg" class="w-6 h-6" alt="icon">
                                 <span class="font-bold text-sm leading-[21px]">Browse</span>
                             </div>

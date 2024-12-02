@@ -1,82 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        @font-face {
-            font-family: 'Poppins';
-            font-weight: 400;
-            src: url('https://fonts.gstatic.com/s/poppins/v21/pxiEyp8kv8JHgFVrJJnecmNE.woff2') format('woff2');
-        }
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-        body {
+<body class="font-poppins bg-gray-100 m-0 p-0">
+    <div class="max-w-md mx-auto mt-12 p-6 bg-white rounded-lg shadow-md">
+        <!-- Back Link -->
+        <a href="/" class="block text-sm text-gray-700 hover:underline mb-4"><img src="{{ asset('assets/images/icons/back.svg') }}" alt=""></a>
+
+        <!-- Title -->
+        <h1 class="text-center text-2xl font-semibold text-gray-800 mb-6">Login</h1>
+
+        <!-- Form -->
+        <form action="{{ route('login') }}" method="POST" class="space-y-4">
+            @csrf
+
+            <!-- Email Input -->
+            <input type="email" name="email" placeholder="Email" required
+                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700">
+
+            <!-- Password Input -->
+            <input type="password" name="password" placeholder="Password" required
+                class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700">
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="w-full p-3 bg-purple-400 text-black rounded-md font-medium text-lg hover:bg-purple-600">
+                Login
+            </button>
+        </form>
+
+        <!-- Register Link -->
+        <a href="{{ route('register') }}" class="block text-center mt-3 text-gray-800 text-sm hover:underline">
+            Belum punya akun? Daftar di sini
+        </a>
+    </div>
+
+    <!-- Tailwind Font Customization -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        .font-poppins {
             font-family: 'Poppins', sans-serif;
-            background-color: #f4f7fc;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            font-weight: 600;
-        }
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #CAF227;
-            color: black;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #CAF227;
-        }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            text-decoration: none;
-            color: #090917;
-            font-size: 14px;
-        }
-        a:hover {
-            text-decoration: underline;
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Login</h1>
-        <form action="{{ route('login') }}" method="POST">
-            @csrf
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <a href="{{ route('register') }}">Belum punya akun? Daftar di sini</a>
-    </div>
 </body>
+
 </html>
