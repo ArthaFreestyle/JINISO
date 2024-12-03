@@ -51,14 +51,14 @@
                 <div class="grid grid-cols-2 gap-4">
                     
                     @forelse ($categories as $itemCategory)
-                        <a href="category.html">
+                        <a href="{{ route('front.category',$itemCategory->slug) }}">
                             <div class="flex items-center justify-between w-full rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FFC700]">
                                 <div class="flex flex-col gap-[2px] px-[14px]">
                                     <h3 class="font-bold text-sm leading-[21px]">{{$itemCategory->category_name}}</h3>
                                     <p class="text-xs leading-[18px] text-[#878785]">{{ $itemCategory->products->count() }} Products</p>
                                 </div>
                                 <div class="flex shrink-0 w-20 h-[90px] overflow-hidden">
-                                    <img src="assets/images/thumbnails/photo1.png" class="w-full h-full object-cover object-left" alt="thumbnail">
+                                    <img src="{{ asset('storage/'.$itemCategory->icon) }}" class="w-full h-full object-cover object-left" alt="thumbnail">
                                 </div>
                             </div>
                         </a>
@@ -79,7 +79,7 @@
                         
                         @forelse ($popularProducts as $product)
                         <div class="swiper-slide !w-fit py-[2px]">
-                            <a href="details.html">
+                            <a href="{{route('front.details',$product->slug)}}">
                                 <div class="flex flex-col shrink-0 w-[230px] h-full rounded-3xl gap-[14px] p-[10px] pb-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FFC700]">
                                     <div class="w-[210px] h-[230px] rounded-3xl bg-[#D9D9D9] overflow-hidden">
                                         <img src="{{ asset('storage/'.$product->thumbnail) }}" class="w-full h-full object-cover" alt="thumbnail">
@@ -116,7 +116,7 @@
                 <div class="flex flex-col gap-4">
                     
                     @forelse ($newProducts as $product)
-                    <a href="details.html">
+                    <a href="{{route('front.details',$product->slug)}}">
                         <div class="flex items-center rounded-3xl p-[10px_16px_16px_10px] gap-[14px] bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FFC700]">
                             <div class="w-20 h-20 flex shrink-0 rounded-2xl bg-[#D9D9D9] overflow-hidden">
                                 <img src="{{ asset('storage/'.$product->thumbnail) }}" class="w-full h-full object-cover" alt="thumbnail">

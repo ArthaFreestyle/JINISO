@@ -9,7 +9,7 @@ use Str;
 
 class Products extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $table = 'products';
 
     protected $primaryKey = 'product_id';
@@ -25,24 +25,31 @@ class Products extends Model
         'category_id'
     ];
 
-    public function setProductNameAttribute($value){
+    public function setProductNameAttribute($value)
+    {
         $this->attributes['product_name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
 
-    public function category(){
-        return $this->belongsTo(Category::class,'category_id');
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function images(){
-        return $this->hasMany(ProductImage::class,'product_id');
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 
-    public function sizes(){
-        return $this->hasMany(ProductSize::class,'product_id');
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class, 'product_id');
     }
 
-    public function review(){
+    public function review()
+    {
         return $this->hasMany(ProductReviews::class);
     }
+
+
 }

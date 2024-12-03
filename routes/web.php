@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Models\Category;
+use App\Models\Products;
 
 Route::get('/',[FrontController::class,'index'])->name('front.index');
 
