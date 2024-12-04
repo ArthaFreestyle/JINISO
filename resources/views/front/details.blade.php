@@ -59,17 +59,20 @@
                     </div>
                 </div>
             </div>
-            <form action="booking.html" class="flex flex-col gap-3">
+            <form action="{{ route('front.save_order',$product->slug) }}" method="POST" class="flex flex-col gap-3">
+                @csrf
                 <div class="flex flex-col gap-3 px-4">
                     <h2 class="font-bold">Choose Size</h2>
                     <div class="flex items-center flex-wrap gap-[10px]">
                         @foreach ($product->sizes as $size)
                         <label class="relative flex justify-center min-w-[83px] w-fit rounded-2xl ring-1 ring-[#2A2A2A] p-[14px] transition-all duration-300 has-[:checked]:bg-white has-[:checked]:ring-2 has-[:checked]:ring-[#FFC700] hover:ring-2 hover:ring-[#FFC700]">
-                            <input type="radio" name="size" value="EU 40" class="absolute top-1/2 left-1/2 opacity-0" required>
+                            <input type="radio" data-size-id="{{ $size->id}}" name="product_size" value="{{ $size->size }}" class="absolute top-1/2 left-1/2 opacity-0" required>
                             <span class="font-semibold">{{ $size->size }}</span>
                         </label>
                         @endforeach
                     </div>
+
+                    <input type="text" name="size_id" hidden>
                 </div>
                 <div id="form-bottom-nav" class="relative flex h-[100px] w-full shrink-0 mt-5">
                     <div class="fixed bottom-5 w-full max-w-[640px] z-30 px-4">
@@ -89,5 +92,20 @@
 
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script src="{{ asset('js/details.js') }}"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const sizeRadios = document.querySelectorAll('input[name="product_size"]');
+                const sizeIdInput = document.querySelector('input[name="size_id"]');
+
+
+                sizeRadios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        const selectedSizeId = this.getAttribute('data-size-id');
+                        sizeIdInput.value = selectedSizeId;
+                        
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

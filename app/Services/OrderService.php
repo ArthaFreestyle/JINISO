@@ -37,10 +37,10 @@ class OrderService{
 
         public function getOrderDetails(){
             $oderData = $this->orderRepository->getOrderDataFromSession();
-            $products = $this->productRepository->find($oderData['product_id']);
+            $product = $this->productRepository->find($oderData['product_id']);
 
-            $quantity =isset($oderData['quantity']) ? $oderData['quantity'] : 1;
-            $subTotalAmout = $products->price * $quantity;
+            $quantity = isset($oderData['quantity']) ? $oderData['quantity'] : 1;
+            $subTotalAmout = $product->price * $quantity;
 
             $taxRate = 0.11;
             $totalTax = $subTotalAmout * $taxRate;
@@ -51,7 +51,7 @@ class OrderService{
             $oderData['total_tax'] = $totalTax;
             $oderData['grand_total_amount'] = $grandTotalAmount;
 
-            return compact('products', 'oderData');
+            return compact('product', 'oderData');
         }
 
         public function applyPromoCode(string $code,int $subTotalAmout){
