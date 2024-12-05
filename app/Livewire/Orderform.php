@@ -16,6 +16,7 @@ class Orderform extends Component
     public $promoCodeId = null;
     public $quantity = 1;
     public $discount = 0;
+    public $totalDiscountAmount = 0;
     public $grandTotalAmount;
     public $name;
     public $email;
@@ -71,6 +72,74 @@ class Orderform extends Component
             $this->calculateTotal();
         }
     }
+
+    public function updatedPromoCode()
+    {
+        $this->applyPromoCode();
+    }
+
+    public function applyPromoCode()
+    {
+        if(!$this->promoCode){
+            $this->resetDiscount();
+            return;
+        }
+
+        $result = $this->orderService->applyPromoCode($this->promoCode,$this->subTotalAmount);
+
+        if(isset($result['error'])){
+            session()->flash('error',$result['error']);
+            $this->resetDiscount();
+        }else{
+            session()->flash('message','Promo Code Applied');
+            $this->discount = $result['discount'];
+            $this->calculateTotal();
+            $this->promoCodeId = $result['promoCodeId'];
+            $this->totalDiscountAmount = $result['discount']; 
+        }
+    }
+
+    protected function resetDiscount()
+    {
+        $this->discount = 0;
+        $this->promoCodeId = null;
+        $this->calculateTotal();
+        $this->totalDiscountAmount = 0;
+    }
+
+    public function rules(){
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'quantity' => 'required|numeric|max:'.$this->product->stock,
+        ];
+    }
+
+    public function gatherBookingData(array $validatedData)
+    {
+        return [
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'quantity' => $this->quantity,
+            'sub_total_amount' => $this->subTotalAmount,
+            'total_discount_amount' => $this->totalDiscountAmount,
+            'grand_total_amount' => $this->grandTotalAmount,
+            'promo_code_id' => $this->promoCodeId,
+            'promo_code' => $this->promoCode,
+            'discount' => $this->discount,
+            
+        ];
+    }
+
+    public function submit(){
+        $validatedData = $this->validate();
+        $bookingData = $this->gatherBookingData($validatedData);
+
+        $this->orderService->updateBookingTransaction($bookingData);
+
+        return redirect()->route('front.customer_data');
+    }
+    
     public function render()
     {
         return view('livewire.orderform');

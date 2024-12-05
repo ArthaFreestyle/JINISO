@@ -15,7 +15,13 @@ class Orders extends Model
         'order_date',
         'total_amount',
         'promo_code_id',
-        'status'
+        'status',
+        'address',
+        'phone',
+        'postal_code',
+        'city',
+        'name',
+        'email',
     ];
 
     public function details(){

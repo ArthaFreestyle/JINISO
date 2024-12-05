@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Orders;
+use App\Models\OrderDetails;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\ProductsRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
@@ -38,6 +39,7 @@ class OrderService{
         public function getOrderDetails(){
             $oderData = $this->orderRepository->getOrderDataFromSession();
             $product = $this->productRepository->find($oderData['product_id']);
+            $discount = $oderData['discount'] ?? 0;
 
             $quantity = isset($oderData['quantity']) ? $oderData['quantity'] : 1;
             $subTotalAmout = $product->price * $quantity;
@@ -45,7 +47,7 @@ class OrderService{
             $taxRate = 0.11;
             $totalTax = $subTotalAmout * $taxRate;
 
-            $grandTotalAmount = $subTotalAmout + $totalTax;
+            $grandTotalAmount = $subTotalAmout + $totalTax - $discount;
 
             $oderData['sub_total_amount'] = $subTotalAmout;
             $oderData['total_tax'] = $totalTax;
@@ -58,7 +60,7 @@ class OrderService{
             $promoCode = $this->promoCodeRepository->findByCode($code);
 
             if($promoCode){
-                $discount = $promoCode->discount_rate;
+                $discount = $promoCode->discount_amount;
                 $grandTotalAmount = $subTotalAmout - $discount;
                 $promoCodeId = $promoCode->id;
                 return compact('promoCodeId', 'discount', 'grandTotalAmount');
@@ -78,25 +80,42 @@ class OrderService{
 
         public function paymentConfirm(array $validated){
             $orderData = $this->orderRepository->getOrderDataFromSession();
-
             try{
-                DB::transaction(function() use ($validated,$orderData){
+                DB::transaction(function() use ($validated,&$newOrderId,$orderData){
                     $validated['user_id'] = auth()->id();
                     $validated['product_id'] = $orderData['product_id'];
                     $validated['size_id'] = $orderData['size_id'];
                     $validated['quantity'] = $orderData['quantity'];
                     $validated['sub_total_amount'] = $orderData['sub_total_amount'];
                     $validated['grand_total_amount'] = $orderData['grand_total_amount'];
-                    $validated['discound_amount'] = $orderData['discount_amount'];
+                    $validated['discound_amount'] = $orderData['total_discount_amount'];
                     $validated['promo_code_id'] = $orderData['promo_code_id'];
-                    $validated['status'] = 'pending';
+                    $validated['status'] = 'Paid';
+                    $validated['address'] = $orderData['address'];
+                    $validated['email'] = $orderData['email'];
+                    $validated['phone'] = $orderData['phone'];
+                    $validated['name'] = $orderData['name'];
+                    $validated['city'] = $orderData['city'];
+                    $validated['postal_code'] = $orderData['post_code'];
 
                     $newTransaction = $this->orderRepository->createTransaction($validated);
+                    $newOrderId = $newTransaction->order_id;
                 });
+            
             }catch(\Exception $e){
                 Log::error($e->getMessage());
                 return ['error' => 'Failed to save transaction'];
             }
+            session()->forget('orderData');
+            return $newOrderId;
+        }
+
+        public function getOrders(){
+            return Orders::with('details')->where('user_id', auth()->id())->latest()->get();
+        }
+
+        public function getOrderDetailsById($orderId){
+            return OrderDetails::where('order_detail_id', $orderId)->first();
         }
 
 

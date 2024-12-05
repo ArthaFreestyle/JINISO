@@ -32,10 +32,10 @@
                     
                 </div>
             </div>                                    
-            <form class="flex justify-between items-center mx-4">
+            <form action="{{ route('front.search')}}" class="flex justify-between items-center mx-4">
                 <div class="relative flex items-center w-full rounded-l-full px-[14px] gap-[10px] bg-white transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FFC700]">
                     <img src="assets/images/icons/search-normal.svg" class="w-6 h-6" alt="icon">
-                    <input type="text" class="w-full py-[14px] appearance-none bg-white outline-none font-semibold placeholder:font-normal placeholder:text-[#878785]" placeholder="Search product...">
+                    <input type="text" name="keyword" class="w-full py-[14px] appearance-none bg-white outline-none font-semibold placeholder:font-normal placeholder:text-[#878785]" placeholder="Search product...">
                 </div>
                 <button type="submit" style="background-color: #a78bfa;" class="h-full rounded-r-full py-[14px] px-5">
                     <span class="font-semibold">Explore</span>
@@ -153,7 +153,7 @@
                                 <span class="font-bold text-sm leading-[21px]">Browse</span>
                             </div>
                         </a>
-                        <a href="check-booking.html" class="mx-auto w-full">
+                        <a href="{{ route('front.check_booking') }}" class="mx-auto w-full">
                             <img src="assets/images/icons/bag-2-white.svg" class="w-6 h-6" alt="icon">
                         </a>
                         <a href="#" class="mx-auto w-full">

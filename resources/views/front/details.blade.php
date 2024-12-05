@@ -78,7 +78,7 @@
                     <div class="fixed bottom-5 w-full max-w-[640px] z-30 px-4">
                         <div class="flex items-center justify-between rounded-full bg-[#2A2A2A] p-[10px] pl-6">
                             <div class="flex flex-col gap-[2px]">
-                                <p class="font-bold text-[20px] leading-[30px] text-white">Rp. {{ number_format($product->price,0,',','.') }}</p>
+                                <p class="font-bold text-[20px] leading-[30px] text-white">Rp {{ number_format($product->price,0,',','.') }}</p>
                                 <p class="text-sm leading-[21px] text-[#878785]">piece of product</p>
                             </div>
                             <button type="submit" style="background-color: #a78bfa;" class="rounded-full p-[12px_20px] bg-[#C5F277] font-bold">

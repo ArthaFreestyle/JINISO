@@ -15,7 +15,8 @@ class OrderDetails extends Model
         'product_id',
         'quantity',
         'price',
-        'subtotal'
+        'subtotal',
+        'product_size_id'
     ];
 
     public function order(){
@@ -24,5 +25,9 @@ class OrderDetails extends Model
 
     public function product(){
         return $this->belongsTo(Products::class,'product_id','product_id');
+    }
+
+    public function size(){
+        return $this->belongsTo(ProductSize::class,'product_size_id','id');
     }
 }

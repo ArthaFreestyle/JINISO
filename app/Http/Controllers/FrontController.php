@@ -34,6 +34,13 @@ class FrontController extends Controller
         return view('front.details',compact('product'));
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $data = $this->frontService->searchProducts($keyword);
+        return view('front.search',compact('data','keyword'));
+    }
+
 
 
 

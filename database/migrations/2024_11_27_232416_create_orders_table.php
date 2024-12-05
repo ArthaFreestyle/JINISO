@@ -22,9 +22,15 @@ return new class extends Migration
             $table->id('order_id'); // ID unik untuk setiap order
             $table->unsignedBigInteger('user_id'); // ID pengguna yang membuat order
             $table->unsignedBigInteger('promo_code_id')->nullable();
-            $table->dateTime('order_date'); // Tanggal pemesanan
+            $table->dateTime('order_date')->useCurrent(); // Tanggal order dibuat
             $table->integer('total_amount'); // Total jumlah uang yang dibayar
             $table->string('status')->default('pending'); // Status pesanan (e.g., pending, completed)
+            $table->string('address'); // Alamat pengiriman
+            $table->string('email'); // Email pengguna
+            $table->string('phone'); // Nomor telepon pengguna
+            $table->string('name'); // Nama pengguna
+            $table->string('city'); // Kota pengguna
+            $table->string('postal_code'); // Kode pos pengguna
             $table->timestamps(); // Kolom created_at dan updated_at
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('promo_code_id')->references('id')->on('promo_codes')->onDelete('cascade');

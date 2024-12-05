@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -77,6 +78,18 @@ class OrdersResource extends Resource
                                         'cancelled' => 'Cancelled',
                                     ])
                                     ->required(),
+                                Textarea::make('address')
+                                    ->required(),
+                                TextInput::make('email')
+                                    ->required(),
+                                TextInput::make('phone')
+                                    ->required(),
+                                TextInput::make('name')
+                                    ->required(),
+                                TextInput::make('city')
+                                    ->required(),
+                                TextInput::make('postal_code')
+                                    ->required(),
                             ]),
                         Step::make('Order Details')
                             ->schema([
@@ -88,12 +101,29 @@ class OrdersResource extends Resource
                                             ->relationship('product', 'product_name')
                                             ->required()
                                             ->afterStateUpdated(function (callable $set, $state) {
-                                                
+
                                                 $product = Products::find($state);
                                                 if ($product) {
                                                     $set('price', $product->price);
+                                                    $set('product_id', $product->product_id);
                                                 }
                                             }),
+                                        Select::make('product_size_id')
+                                            ->relationship('product.sizes', 'size')
+                                            ->label('Size')
+                                            ->live()
+                                            ->afterStateUpdated(function (callable $get, callable $set, $state) {
+                                                $product = $get('product_id');
+                                                if ($product) {
+                                                    $productInstance = Products::find($product);
+                                                    if ($productInstance) {
+                                                        $size = $productInstance->sizes->find($state);
+                                                        if ($size) {
+                                                            $set('product_size_id', $size->id);
+                                                    }
+                                                }}
+                                            })
+                                            ->required(),
                                         TextInput::make('quantity')
                                             ->numeric()
                                             ->required()
@@ -139,17 +169,17 @@ class OrdersResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('approve')
-                ->label('Approve')
-                ->action(function(Orders $order){
-                    $order->update([
-                        'status' => 'completed'
-                    ]);
-                    Notification::make()
-                    ->title('Order Approved')
-                    ->success()
-                    ->body('Order has been approved successfully')
-                    ->send();
-                }),
+                    ->label('Approve')
+                    ->action(function (Orders $order) {
+                        $order->update([
+                            'status' => 'completed'
+                        ]);
+                        Notification::make()
+                            ->title('Order Approved')
+                            ->success()
+                            ->body('Order has been approved successfully')
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

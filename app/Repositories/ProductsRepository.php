@@ -14,7 +14,7 @@ class ProductsRepository implements ProductsRepositoryInterface
 
     public function searchByName(string $keyword)
     {
-        return Products::where('name', 'like', "%",$keyword,"%")->get();
+        return Products::where('product_name', 'like', "%$keyword%")->get();
     }
 
     public function getAllNewProducts()
