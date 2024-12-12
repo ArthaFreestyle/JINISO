@@ -16,7 +16,7 @@
                     <a href="#">
                         <img src="{{ asset('assets/images/icons/notification.svg') }}" class="w-10 h-10" alt="notification">
                     </a>
-                    <a href="#">
+                    <a href="/cart">
                         <img src="assets/images/icons/cart.svg" class="w-10 h-10" alt="cart">
                     </a>
                     @if (Auth()->user())
@@ -114,31 +114,39 @@
                     </a>
                 </div>
                 <div class="flex flex-col gap-4">
-                    
                     @forelse ($newProducts as $product)
-                    <a href="{{route('front.details',$product->slug)}}">
-                        <div class="flex items-center rounded-3xl p-[10px_16px_16px_10px] gap-[14px] bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FFC700]">
-                            <div class="w-20 h-20 flex shrink-0 rounded-2xl bg-[#D9D9D9] overflow-hidden">
-                                <img src="{{ asset('storage/'.$product->thumbnail) }}" class="w-full h-full object-cover" alt="thumbnail">
+                    <!-- <a href="{{ route('front.details', $product->slug) }}"> -->
+                    <!-- <div class="flex items-center rounded-3xl p-[10px_16px_16px_10px] gap-[14px] bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FFC700]"> -->
+                    <div class="flex items-center rounded-3xl p-[10px_16px_16px_10px] gap-[14px] bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FFC700]">
+                        <!-- Thumbnail with Link to Product Details -->
+                        <a href="{{ route('front.details', $product->slug) }}" class="w-20 h-20 flex shrink-0 rounded-2xl bg-[#D9D9D9] overflow-hidden">
+                            <img src="{{ asset('storage/'.$product->thumbnail) }}" class="w-full h-full object-cover" alt="thumbnail">
+                        </a>
+                        
+                        <!-- Product Info -->
+                        <div class="flex w-full items-center justify-between gap-[14px]">
+                            <div class="flex flex-col gap-[6px]">
+                                <h3 class="font-bold leading-[20px]">{{ $product->product_name }}</h3>
+                                <p class="text-sm leading-[21px] text-[#878785]">{{ $product->category->category_name }}</p>
                             </div>
-                            <div class="flex w-full items-center justify-between gap-[14px]">
-                                <div class="flex flex-col gap-[6px]">
-                                    <h3 class="font-bold leading-[20px]">{{ $product->product_name }}</h3>
-                                    <p class="text-sm leading-[21px] text-[#878785]">{{ $product->category->category_name }}</p>
+                            
+                            <!-- Rating and Cart Icon -->
+                            <div class="flex flex-col gap-1 items-end shrink-0">
+                                <div class="flex">
+                                    <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
+                                    <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
+                                    <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
+                                    <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
+                                    <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
                                 </div>
-                                <div class="flex flex-col gap-1 items-end shrink-0">
-                                    <div class="flex">
-                                        <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
-                                        <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
-                                        <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
-                                        <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
-                                        <img src="assets/images/icons/Star 1.svg" class="w-[18px] h-[18px] flex shrink-0" alt="star">
-                                    </div>
-                                    <p class="font-semibold text-sm leading-[21px]">4.5</p>
-                                </div>
+                                <p class="font-semibold text-sm leading-[21px]">4.5</p>
+                                
+                                <!-- Cart Icon with Livewire -->
+                                @livewire('add-to-cart', ['product' => $product])
                             </div>
                         </div>
-                    </a>
+                    </div>
+                    <!-- </a> -->
                     @empty
                         <p>Belum ada data Terbaru</p>
                     @endforelse

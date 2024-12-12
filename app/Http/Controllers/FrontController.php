@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\Cart;
 use App\Services\FrontService;
 
 class FrontController extends Controller
@@ -41,6 +42,19 @@ class FrontController extends Controller
         return view('front.search',compact('data','keyword'));
     }
 
+    public function cart()
+    {
+        // Get cart items for the logged-in user
+        $cartItems = Cart::with('product')->where('user_id', auth()->id())->get();
+
+        $totalPrice = 0;
+        foreach ($cartItems as $item) {
+            // Access the related product's price
+            $totalPrice += $item->product->price * $item->quantity;
+    }
+
+        return view('front.cart', compact('cartItems', 'totalPrice'));
+    }
 
 
 

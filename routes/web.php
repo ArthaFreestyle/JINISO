@@ -15,6 +15,8 @@ Route::get('/details/{product:slug}', [FrontController::class, 'details'])->name
 
 Route::get('/search', [FrontController::class, 'search'])->name('front.search');
 
+Route::get('/cart', [FrontController::class, 'cart'])->name('cart');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', [AuthController::class, 'showProfile'])->name('profile')->middleware('auth');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
