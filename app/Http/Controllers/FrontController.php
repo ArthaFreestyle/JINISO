@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Products;
 use App\Models\Cart;
 use App\Services\FrontService;
+use App\Models\ProductReviews;
 
 class FrontController extends Controller
 {
@@ -31,7 +32,7 @@ class FrontController extends Controller
 
     public function details(Products $product)
     {
-
+        
         return view('front.details',compact('product'));
     }
 
@@ -54,6 +55,30 @@ class FrontController extends Controller
     }
 
         return view('front.cart', compact('cartItems', 'totalPrice'));
+    }
+
+    public function deleteCart(Cart $cart)
+    {
+        $cart->delete();
+        return redirect()->route('cart');
+    }
+
+    public function productRating(Request $request)
+    {
+        $request->validate([
+            'product' => 'required|exists:products,product_id',
+            'rating' => 'required|numeric|min:1|max:5',
+            'comment' => 'required'
+        ]);
+
+        $productReview = new ProductReviews();
+        $productReview->user_id = auth()->id();
+        $productReview->product_id = $request->product;
+        $productReview->rating = $request->rating;
+        $productReview->review = $request->comment;
+        $productReview->save();
+
+        return redirect('/');
     }
 
 

@@ -14,4 +14,14 @@ class ProductReviews extends Model
         'rating',
         'review'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Products::class, 'product_id', 'product_id');
+    }
 }
