@@ -15,7 +15,7 @@ Route::get('/details/{product:slug}', [FrontController::class, 'details'])->name
 
 Route::get('/search', [FrontController::class, 'search'])->name('front.search');
 
-Route::get('/cart', [FrontController::class, 'cart'])->name('cart');
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('profile', [AuthController::class, 'showProfile'])->name('profile')->middleware('auth');
@@ -35,6 +35,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/order/payment/confirm', [OrderController::class, 'paymentConfirm'])->name('front.payment_confirm');
 
     Route::get('/order/finished/{orders:order_id}', [OrderController::class, 'orderFinished'])->name('front.order_finished');
+
+    Route::get('/cart', [FrontController::class, 'cart'])->name('cart');
+
+    Route::post('cart/delete/{cart:id}', [FrontController::class, 'deleteCart'])->name('cart.delete');
+
+    Route::post('productrating', [FrontController::class, 'productRating'])->name('productrating');
 });
 
 

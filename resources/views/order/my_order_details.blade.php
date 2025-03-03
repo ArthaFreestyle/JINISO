@@ -117,6 +117,28 @@
                     <p class="leading-[26px]">Kami melindungi data privasi anda dengan baik bantuan Ultraman.</p>
                 </div>
             </section>
+            <section class="accordion flex flex-col rounded-[20px] p-4 pb-5 gap-5 mx-4 bg-white overflow-visible transition-all duration-300 mb-10">
+                <form action="{{ route('productrating') }}" method="POST" class="flex flex-col gap-4">
+                    @csrf
+                    <input type="text" name="product" value="{{ $order->product->product_id }}" hidden>
+                    <!-- Input komentar -->
+                    <label for="comment" class="text-lg font-semibold">Your Comment</label>
+                    <textarea id="comment" name="comment" cols="60" rows="6" class="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Write your comment here..."></textarea>
+                    
+                    <!-- Rating -->
+                    <label for="rating" class="text-lg font-semibold">Rating (1-5)</label>
+                    <select id="rating" name="rating" class="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="5">5 - Excellent</option>
+                    </select>
+                    
+                    <!-- Submit button -->
+                    <button type="submit" class="srounded-full p-[12px_20px] text-center w-full bg-[#C5F277] font-bold">Submit</button>
+                </form>
+            </section>
         </div>
 
         <script src="{{ asset('js/accordion.js') }}"></script>

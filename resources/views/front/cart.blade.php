@@ -41,7 +41,7 @@
                     <div class="flex items-center justify-between bg-white rounded-xl p-4 shadow-md hover:ring-2 hover:ring-[#FFC700]">
                         <!-- Product Image -->
                         <div class="flex items-center gap-4">
-                            <img src="{{ asset('storage/'.$item['thumbnail']) }}" class="w-20 h-20 object-cover rounded-lg" alt="product-image">
+                            <img src="{{ Storage::url($item->product->thumbnail) }}" class="w-20 h-20 object-cover rounded-lg" alt="product-image">
                             <div class="flex flex-col">
                                 <h3 class="font-semibold text-lg">{{ $item['name'] }}</h3>
                                 <p class="text-sm text-[#878785]">{{ $item['category_name'] }}</p>
@@ -55,11 +55,10 @@
                         </div>
 
                         <!-- Remove Button -->
-                        <form action="" method="POST" class="ml-4">
+                        <form action="{{ route('cart.delete',$item->id) }}" method="POST" class="ml-4">
                             @csrf
-                            @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700">
-                                <img src="assets/images/icons/trash.svg" class="w-6 h-6" alt="remove">
+                                <img src="{{ asset('assets/images/icons/trash.svg') }}" class="w-6 h-6" alt="remove">
                             </button>
                         </form>
                     </div>

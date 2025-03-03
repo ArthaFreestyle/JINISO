@@ -40,9 +40,9 @@
                     <div class="flex flex-col items-end shrink-0">
                         <div class="flex items-center gap-1">
                             <img src="{{ asset('assets/images/icons/Star 1.svg') }}" class="w-[26px] h-[26px]" alt="star">
-                            <span class="font-semibold text-xl leading-[30px]">4.5</span>
+                            <span class="font-semibold text-xl leading-[30px]">{{ $product->review->sum('rating')/$product->review->count() }}</span>
                         </div>
-                        <p class="text-sm leading-[21px] text-[#878785]">(18,485 reviews)</p>
+                        <p class="text-sm leading-[21px] text-[#878785]">({{ $product->review->count() }} reviews)</p>
                     </div>
                 </div>
                 <p id="desc" class="leading-[30px]">{{ $product->description }}</p>
@@ -74,6 +74,18 @@
 
                     <input type="text" name="size_id" hidden>
                 </div>
+                
+                <div class="flex flex-col gap-3 px-4">
+                    <h1 class="font-bold">Review</h1>
+                    @foreach ($product->review as $review)
+                    <div class="review-item p-3 border rounded-md">
+                        <p class="text-sm font-semibold">{{ $review->user->name }}</p>
+                        <p class="text-sm text-gray-600">"{{ $review->review }}."</p>
+                        <p class="text-sm text-yellow-500">Rating: {{ str_repeat('⭐',$review->rating) }}</p>
+                    </div>
+                    @endforeach
+                    
+                </div>
                 <div id="form-bottom-nav" class="relative flex h-[100px] w-full shrink-0 mt-5">
                     <div class="fixed bottom-5 w-full max-w-[640px] z-30 px-4">
                         <div class="flex items-center justify-between rounded-full bg-[#2A2A2A] p-[10px] pl-6">
@@ -88,6 +100,7 @@
                     </div>
                 </div>
             </form>
+            
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
