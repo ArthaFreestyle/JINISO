@@ -107,7 +107,7 @@ class OrderService{
                 return ['error' => 'Failed to save transaction'];
             }
             session()->forget('orderData');
-            return $newOrderId;
+            return $newOrderId ?? ['error' => 'Failed to save transaction'];
         }
 
         public function getOrders(){
